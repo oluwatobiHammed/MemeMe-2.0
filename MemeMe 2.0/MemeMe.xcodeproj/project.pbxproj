@@ -29,6 +29,7 @@
 		6DD84E6323FC459000CAFFD0 /* Meme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD84E6223FC459000CAFFD0 /* Meme.swift */; };
 		6DE3C50A2400437D00589BCC /* SavedMemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3C5092400437D00589BCC /* SavedMemesViewController.swift */; };
 		6DFCD348240808190016BA84 /* MemeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFCD347240808190016BA84 /* MemeStore.swift */; };
+		CEEDDF7D243714AB00C13865 /*  MemeEditorViewController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEDDF7C243714AB00C13865 /*  MemeEditorViewController+extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		6DD84E6223FC459000CAFFD0 /* Meme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meme.swift; sourceTree = "<group>"; };
 		6DE3C5092400437D00589BCC /* SavedMemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedMemesViewController.swift; sourceTree = "<group>"; };
 		6DFCD347240808190016BA84 /* MemeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeStore.swift; sourceTree = "<group>"; };
+		CEEDDF7C243714AB00C13865 /*  MemeEditorViewController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " MemeEditorViewController+extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				6D362BA423FACD6F0078AF3D /* MemeEditorViewController.swift */,
+				CEEDDF7C243714AB00C13865 /*  MemeEditorViewController+extension.swift */,
 			);
 			path = MemeEditorScreen;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				6D362B9123FAB9B70078AF3D /* AppDelegate.swift in Sources */,
 				6D362BAB23FAE6950078AF3D /* UIImagePickerController+sourceType.swift in Sources */,
 				6D327C962416A44300B6BA07 /* BackgroundView.swift in Sources */,
+				CEEDDF7D243714AB00C13865 /*  MemeEditorViewController+extension.swift in Sources */,
 				6D049AA4241578C7005EE31C /* SavedMemesDataSource.swift in Sources */,
 				6D5851A6240402730038066B /* SavedMemesCollectionLayout.swift in Sources */,
 				6D362BA523FACD6F0078AF3D /* MemeEditorViewController.swift in Sources */,

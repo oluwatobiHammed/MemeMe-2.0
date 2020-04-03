@@ -23,10 +23,8 @@ final class MemeEditorViewController: UIViewController {
     let bottomTextField = UITextField()
     var bottomTextFieldBottomConstraint = NSLayoutConstraint()
     var topTextFieldTopConstraint = NSLayoutConstraint()
-    var topTextFieldLeadingConstraint = NSLayoutConstraint()
-    var topTextFieldTrailingConstraint = NSLayoutConstraint()
-    var bottomTextFieldLeadingConstraint = NSLayoutConstraint()
-    var bottomTextFieldTrailingConstraint = NSLayoutConstraint()
+    var textFieldLeadingConstraint = NSLayoutConstraint()
+    var textFieldTrailingConstraint = NSLayoutConstraint()
     var keyboardHeight: CGFloat = 0.0
     let didSaveMemeCallback: () -> Void
     
@@ -51,7 +49,8 @@ final class MemeEditorViewController: UIViewController {
         setUpNavigationBar()
         setUpImageView()
         setUpToolBar()
-        setUpTextFields()
+        setUpTextFields(textField: bottomTextField)
+        setUpTextFields(textField: topTextField)
         setUpPickImageLabel()
         setDefaultValues()
     }
@@ -67,10 +66,8 @@ final class MemeEditorViewController: UIViewController {
         let textFieldConstraints = calculateTextFieldsConstants()
         topTextFieldTopConstraint.constant = textFieldConstraints.top
         bottomTextFieldBottomConstraint.constant = textFieldConstraints.bottom
-        topTextFieldLeadingConstraint.constant = calculateHorizontalTextFieldOffset()
-        topTextFieldTrailingConstraint.constant = calculateHorizontalTextFieldOffset()
-        bottomTextFieldLeadingConstraint.constant = calculateHorizontalTextFieldOffset()
-        bottomTextFieldTrailingConstraint.constant = calculateHorizontalTextFieldOffset()
+        textFieldLeadingConstraint.constant = calculateHorizontalTextFieldOffset()
+        textFieldLeadingConstraint.constant = calculateHorizontalTextFieldOffset()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -144,72 +141,63 @@ final class MemeEditorViewController: UIViewController {
         ])
     }
     
-    private func setUpTextFields() {
-        topTextField.translatesAutoresizingMaskIntoConstraints = false
-        bottomTextField.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(topTextField)
-        view.addSubview(bottomTextField)
-        bottomTextFieldBottomConstraint = photoView.bottomAnchor.constraint(
-            equalTo: bottomTextField.bottomAnchor,
-            constant: 16
-        )
-        topTextField.setContentHuggingPriority(.required, for: .vertical)
-        topTextField.setContentCompressionResistancePriority(.required, for: .vertical)
-        bottomTextField.setContentHuggingPriority(.required, for: .vertical)
-        bottomTextField.setContentCompressionResistancePriority(.required, for: .vertical)
+    private func setUpTextFields(textField: UITextField) {
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(textField)
         
-        topTextFieldTopConstraint = topTextField.topAnchor.constraint(
-            equalTo: photoView.topAnchor,
-            constant: 16
-        )
-        topTextFieldLeadingConstraint = topTextField.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor,
-            constant: 16
-        )
-        topTextFieldTrailingConstraint = view.trailingAnchor.constraint(
-            equalTo: topTextField.trailingAnchor,
-            constant: 16
-        )
-        bottomTextFieldLeadingConstraint = bottomTextField.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor,
-            constant: 16
-        )
-        bottomTextFieldTrailingConstraint = view.trailingAnchor.constraint(
-            equalTo: bottomTextField.trailingAnchor,
-            constant: 16
-        )
+        textField.setContentHuggingPriority(.required, for: .vertical)
+        textField.setContentCompressionResistancePriority(.required, for: .vertical)
+        if textField == topTextField {
+            topTextFieldTopConstraint = textField.topAnchor.constraint(
+                equalTo: photoView.topAnchor,
+                constant: 16
+            )
+            textFieldLeadingConstraint = textField.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: 16
+            )
+            textFieldTrailingConstraint = view.trailingAnchor.constraint(
+                equalTo: textField.trailingAnchor,
+                constant: 16
+            )
+            topTextFieldTopConstraint.priority = .defaultLow
+            
+            NSLayoutConstraint.activate([
+                topTextFieldTopConstraint,
+                textField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                textFieldLeadingConstraint,
+                textFieldTrailingConstraint,
+            ])
+        }
+        if textField == bottomTextField {
+            bottomTextFieldBottomConstraint = photoView.bottomAnchor.constraint(
+                equalTo: textField.bottomAnchor,
+                constant: 16
+            )
+            textFieldLeadingConstraint = textField.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: 16
+            )
+            textFieldTrailingConstraint = view.trailingAnchor.constraint(
+                equalTo: textField.trailingAnchor,
+                constant: 16
+            )
+            NSLayoutConstraint.activate([
+                textFieldLeadingConstraint,
+                textFieldTrailingConstraint,
+                textField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                bottomTextFieldBottomConstraint
+            ])
+        }
         
-        topTextFieldTopConstraint.priority = .defaultLow
         
-        NSLayoutConstraint.activate([
-            topTextFieldTopConstraint,
-            topTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            topTextFieldLeadingConstraint,
-            topTextFieldTrailingConstraint,
-            bottomTextFieldLeadingConstraint,
-            bottomTextFieldTrailingConstraint,
-            bottomTextField.topAnchor.constraint(
-                greaterThanOrEqualTo: topTextField.bottomAnchor,
-                constant: 8
-            ),
-            bottomTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            bottomTextFieldBottomConstraint
-        ])
-        topTextField.borderStyle = .none
-        topTextField.isUserInteractionEnabled = false
-        topTextField.adjustsFontSizeToFitWidth = true
-        topTextField.minimumFontSize = 12
-        topTextField.autocapitalizationType = .allCharacters
-        bottomTextField.borderStyle = .none
-        bottomTextField.autocapitalizationType = .allCharacters
-        bottomTextField.isUserInteractionEnabled = false
-        bottomTextField.adjustsFontSizeToFitWidth = true
-        
-        topTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        
-        topTextField.textAlignment = .center
-        bottomTextField.textAlignment = .center
+        textField.borderStyle = .none
+        textField.isUserInteractionEnabled = false
+        textField.adjustsFontSizeToFitWidth = true
+        textField.minimumFontSize = 12
+        textField.autocapitalizationType = .allCharacters
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = .center
     }
     
     var memeFont: UIFont {
@@ -264,7 +252,7 @@ final class MemeEditorViewController: UIViewController {
     @objc func presentPhotoLibrary() {
         presentPicker(for: .photoLibrary)
     }
-
+    
     @objc func presentCamera() {
         presentPicker(for: .camera)
     }
@@ -457,27 +445,3 @@ extension MemeEditorViewController: UIImagePickerControllerDelegate {
     }
 }
 
-extension MemeEditorViewController: UINavigationControllerDelegate {}
-
-extension MemeEditorViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = ""
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-      textField.resignFirstResponder()
-        return true
-    }
-}
-
-extension UIView {
-    class func animationOptions(for curve: UIView.AnimationCurve) -> UIView.AnimationOptions {
-        switch curve {
-        case .easeInOut: return .curveEaseInOut
-        case .easeIn: return .curveEaseIn
-        case .easeOut: return .curveEaseOut
-        case .linear: return .curveLinear
-        @unknown default: return .curveLinear
-        }
-    }
-}

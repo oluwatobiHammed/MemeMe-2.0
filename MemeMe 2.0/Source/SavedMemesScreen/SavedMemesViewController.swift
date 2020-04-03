@@ -72,37 +72,33 @@ final class SavedMemesViewController: UIViewController {
         tabBar.setItems([tableBarItem, collectionBarItem], animated: false)
     }
     
-    private func setUpTableView() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(tableView)
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-        tableView.backgroundView = BackgroundView()
-    }
-    
-    private func setUpCollectionView() {
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(collectionView)
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-        
-        collectionView.backgroundColor = .white
-        collectionView.backgroundView = BackgroundView()
-        collectionView.isHidden = true
-        
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-        longPress.minimumPressDuration = 1.0
-        longPress.delaysTouchesBegan = true
-        collectionView.addGestureRecognizer(longPress)
-    }
+    fileprivate func setUpView(_ view: UIView) {
+           view.translatesAutoresizingMaskIntoConstraints = false
+           self.view.addSubview(view)
+           NSLayoutConstraint.activate([
+               view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+               view.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+               view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+               view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+           ])
+       }
+       
+       private func setUpTableView() {
+           setUpView(tableView)
+           tableView.backgroundView = BackgroundView()
+       }
+       
+       private func setUpCollectionView() {
+           setUpView(collectionView)
+           collectionView.backgroundColor = .white
+           collectionView.backgroundView = BackgroundView()
+           collectionView.isHidden = true
+           
+           let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+           longPress.minimumPressDuration = 1.0
+           longPress.delaysTouchesBegan = true
+           collectionView.addGestureRecognizer(longPress)
+       }
     
     private func setEditingMode(on isOn: Bool) {
         let doneItem = isOn ? UIBarButtonItem(
